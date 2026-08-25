@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXURA - Login</title>
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="login-container">
+        <!-- Theme Toggle Button -->
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <i class="fas fa-moon"></i>
+        </button>
+
+        <!-- Background Decoration -->
+        <div class="bg-decoration">
+            <div class="circle circle-1"></div>
+            <div class="circle circle-2"></div>
+            <div class="circle circle-3"></div>
+            <div class="circle circle-4"></div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="login-main">
+            <!-- Top Bar -->
+            <div class="login-top-bar">
+                <div class="logo-container">
+                    <div class="logo-icon">
+                        <i class="fas fa-capsules"></i>
+                    </div>
+                    <div class="logo-text">
+                        <span class="logo-nexura">NEXURA</span>
+                        <span class="logo-dot">.</span>
+                    </div>
+                </div>
+                
+                <div class="language-section">
+                    <div class="language-label">
+                        <i class="fas fa-globe-americas"></i>
+                        <span data-i18n="selectLanguage">SELECT LANGUAGE</span>
+                    </div>
+                    <div class="language-select-wrapper">
+                        <select class="language-select" id="languageSelect">
+                            <option value="en">English</option>
+                            <option value="hi">हिंदी</option>
+                            <option value="ta">தமிழ்</option>
+                            <option value="te">తెలుగు</option>
+                            <option value="kn">ಕನ್ನಡ</option>
+                            <option value="ml">മലയാളം</option>
+                            <option value="mr">मराठी</option>
+                            <option value="gu">ગુજરાતી</option>
+                            <option value="bn">বাংলা</option>
+                            <option value="pa">ਪੰਜਾਬੀ</option>
+                            <option value="as">অসমীয়া</option>
+                            <option value="mai">मैथिली</option>
+                            <option value="sat">ᱥᱟᱱᱛᱟᱲᱤ</option>
+                            <option value="ks">कॉशुर</option>
+                            <option value="sd">سنڌي</option>
+                            <option value="kok">कोंकणी</option>
+                            <option value="mni">মৈতৈলোন্</option>
+                            <option value="ne">नेपाली</option>
+                            <option value="brx">बर'</option>
+                            <option value="doi">डोगरी</option>
+                            <option value="sa">संस्कृतम्</option>
+                            <option value="es">Español</option>
+                            <option value="fr">Français</option>
+                            <option value="de">Deutsch</option>
+                            <option value="ja">日本語</option>
+                            <option value="zh">中文</option>
+                        </select>
+                        <i class="fas fa-chevron-down language-arrow"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Login Form -->
+            <div class="login-form-container">
+                <div class="login-header">
+                    <div class="welcome-icon">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <h1 data-i18n="welcomeBack">Welcome Back</h1>
+                    <p data-i18n="loginSubtitle">Sign in to manage your medications</p>
+                </div>
+
+                <form id="loginForm" autocomplete="off">
+                    <!-- Email Field -->
+                    <div class="form-group">
+                        <label class="form-label" data-i18n="email">Email Address</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" class="form-control" id="loginEmail" 
+                                   placeholder="Enter your email" 
+                                   data-i18n-placeholder="enterEmail" required>
+                        </div>
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="form-group">
+                        <label class="form-label" data-i18n="password">Password</label>
+                        <div class="input-with-icon password-field">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" class="form-control" id="loginPassword" 
+                                   placeholder="Enter your password" 
+                                   data-i18n-placeholder="enterPassword" required>
+                            <button type="button" class="btn-toggle-password" id="passwordToggleBtn" onclick="togglePasswordVisibility()">
+                                <i class="fas fa-eye" id="passwordToggleIcon"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Remember Me & Forgot Password -->
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="rememberMe">
+                            <span class="checkmark"></span>
+                            <span data-i18n="rememberMe">Remember Me</span>
+                        </label>
+                        <a href="#" id="forgotPasswordLink" data-i18n="forgotPassword">Forgot Password?</a>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary btn-block btn-login" id="loginBtn">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span data-i18n="signIn">Sign In</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+
+                    <!-- Register Link -->
+                    <div class="register-link">
+                        <span data-i18n="dontHaveAccount">Don't have an account?</span>
+                        <a href="register.html" id="registerLink" data-i18n="register">Register Now</a>
+                    </div>
+
+                    <div id="loginStatus" class="status-message"></div>
+                </form>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <span data-i18n="footerText">© 2026 NEXURA. All rights reserved.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div class="modal-overlay" id="forgotPasswordModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 data-i18n="resetPassword">Reset Password</h3>
+                <button class="modal-close" onclick="closeForgotPasswordModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p data-i18n="resetPasswordSubtitle">Enter your email address and we'll send you a link to reset your password</p>
+                <div class="form-group">
+                    <label data-i18n="email">Email Address</label>
+                    <input type="email" class="form-control" id="resetEmail" 
+                           placeholder="Enter your email" data-i18n-placeholder="enterEmail">
+                </div>
+                <div id="resetStatus" class="status-message" style="display:none;"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeForgotPasswordModal()" data-i18n="cancel">Cancel</button>
+                <button class="btn btn-primary" onclick="sendResetLink()" data-i18n="sendResetLink">Send Reset Link</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <div class="toast-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="toast-content">
+            <div class="toast-title" id="toastTitle">Success</div>
+            <div class="toast-message" id="toastMessage">Login successful!</div>
+        </div>
+        <button class="toast-close" onclick="closeToast()">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="translations.js"></script>
+    <script src="language.js"></script>
+    <script src="login.js"></script>
+</body>
+</html>

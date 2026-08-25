@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXURA - Smart Pill Dispenser</title>
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Theme Toggle Button -->
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <i class="fas fa-moon"></i>
+        </button>
+
+        <!-- Background Decoration -->
+        <div class="bg-decoration">
+            <div class="circle circle-1"></div>
+            <div class="circle circle-2"></div>
+            <div class="circle circle-3"></div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Logo Section -->
+            <div class="logo-container">
+                <div class="logo-icon">
+                    <i class="fas fa-capsules"></i>
+                </div>
+                <div class="logo-text">
+                    <span class="logo-nexura">NEXURA</span>
+                    <span class="logo-dot">.</span>
+                </div>
+                <div class="logo-sub" data-i18n="tagline">Smart Pill Dispenser</div>
+            </div>
+
+            <!-- Language Selector -->
+            <div class="language-section">
+                <div class="language-label">
+                    <i class="fas fa-globe-americas"></i>
+                    <span data-i18n="selectLanguage">Select Language</span>
+                </div>
+                <div class="language-select-wrapper">
+                    <select class="language-select" id="languageSelect">
+                        <!-- Options will be populated by JavaScript -->
+                    </select>
+                    <i class="fas fa-chevron-down language-arrow"></i>
+                </div>
+            </div>
+
+            <!-- Welcome Text -->
+            <div class="welcome-text">
+                <h1 data-i18n="welcomeTitle">Smart Medication Management</h1>
+                <p data-i18n="welcomeSubtitle">Your intelligent companion for timely and accurate medication intake</p>
+            </div>
+
+            <!-- Features Preview -->
+            <div class="features-preview">
+                <div class="feature-item">
+                    <i class="fas fa-clock"></i>
+                    <span data-i18n="featureTimely">Timely Reminders</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span data-i18n="featureTracking">Track Adherence</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <span data-i18n="featureSafety">Safety First</span>
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="button-group">
+                <button class="btn btn-primary" id="getStartedBtn">
+                    <span data-i18n="getStarted">Get Started</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                <button class="btn btn-secondary" id="signInBtn">
+                    <span data-i18n="signIn">Sign In</span>
+                    <i class="fas fa-user"></i>
+                </button>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <span data-i18n="footerText">© 2026 NEXURA. All rights reserved.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="app.js"></script>
+</body>
+</html>

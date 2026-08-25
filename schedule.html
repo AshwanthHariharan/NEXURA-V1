@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXURA - Schedule</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="schedule.css">
+</head>
+<body>
+    <div class="schedule-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <i class="fas fa-pills"></i>
+                <span data-i18n="appName">NEXURA</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item" data-page="dashboard">
+                    <i class="fas fa-th-large"></i>
+                    <span data-i18n="dashboard">Dashboard</span>
+                </a>
+                <a href="#" class="nav-item active" data-page="schedule">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span data-i18n="schedule">Schedule</span>
+                </a>
+                <a href="summary.html" class="nav-item" data-page="profile">
+                    <i class="fas fa-user"></i>
+                    <span data-i18n="profile">Profile</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="btn btn-danger btn-block" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> <span data-i18n="logout">Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="btn-icon" id="sidebarToggle" onclick="toggleSidebar()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 data-i18n="schedule">Schedule</h1>
+                </div>
+                <div class="topbar-right">
+                    <div class="status-badge online" id="deviceStatus">
+                        <i class="fas fa-wifi"></i>
+                        <span data-i18n="connected">Connected</span>
+                    </div>
+                    <div class="language-section">
+                        <select class="language-select" id="languageSelect">
+                            <!-- Options populated by JavaScript -->
+                        </select>
+                    </div>
+                    <button class="btn-icon" id="themeToggle" onclick="toggleTheme()">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <div class="user-profile" onclick="goToProfile()">
+                        <span id="userNameDisplay">User</span>
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Schedule Controls -->
+            <div class="schedule-controls">
+                <div class="controls-left">
+                    <button class="btn btn-outline" id="prevMonthBtn">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <h2 id="currentMonthDisplay">July 2026</h2>
+                    <button class="btn btn-outline" id="nextMonthBtn">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <button class="btn btn-primary btn-sm" id="todayBtn">
+                        <span data-i18n="today">Today</span>
+                    </button>
+                </div>
+                <div class="controls-right">
+                    <button class="btn btn-success btn-sm" onclick="addMedication()">
+                        <i class="fas fa-plus"></i> <span data-i18n="addMedication">Add Medication</span>
+                    </button>
+                    <button class="btn btn-info btn-sm" onclick="exportSchedule()">
+                        <i class="fas fa-file-excel"></i> <span data-i18n="exportSchedule">Export</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Calendar -->
+            <div class="calendar-container">
+                <div class="calendar-header">
+                    <div class="day-header" data-i18n="sun">Sun</div>
+                    <div class="day-header" data-i18n="mon">Mon</div>
+                    <div class="day-header" data-i18n="tue">Tue</div>
+                    <div class="day-header" data-i18n="wed">Wed</div>
+                    <div class="day-header" data-i18n="thu">Thu</div>
+                    <div class="day-header" data-i18n="fri">Fri</div>
+                    <div class="day-header" data-i18n="sat">Sat</div>
+                </div>
+                <div class="calendar-grid" id="calendarGrid">
+                    <!-- Days populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Day Details -->
+            <div class="day-details">
+                <div class="day-details-header">
+                    <h3 id="selectedDateDisplay">Today's Medications</h3>
+                    <span class="day-details-date" id="selectedDateFull">July 26, 2026</span>
+                </div>
+                <div class="day-details-list" id="dayDetailsList">
+                    <div class="log-empty">
+                        <i class="fas fa-pills"></i>
+                        <p data-i18n="noMedicationsScheduled">No medications scheduled for this day</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <span>© 2026 NEXURA. <span data-i18n="allRightsReserved">All rights reserved.</span></span>
+                <span class="footer-version">v2.0.0</span>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Add Medication Modal -->
+    <div class="modal-overlay" id="addMedicationModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 data-i18n="addNewMedication">Add New Medication</h3>
+                <button class="modal-close" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label data-i18n="medicationName">Medication Name</label>
+                    <input type="text" class="form-control" id="medName" placeholder="Enter medication name" data-i18n-placeholder="enterMedicationName">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="dosage">Dosage</label>
+                    <input type="text" class="form-control" id="medDosage" placeholder="e.g., 500mg" data-i18n-placeholder="enterDosage">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="time">Time</label>
+                    <input type="time" class="form-control" id="medTime" value="08:00">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="frequency">Frequency</label>
+                    <select class="form-control" id="medFrequency">
+                        <option value="daily" data-i18n="daily">Daily</option>
+                        <option value="weekly" data-i18n="weekly">Weekly</option>
+                        <option value="monthly" data-i18n="monthly">Monthly</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal()" data-i18n="cancel">Cancel</button>
+                <button class="btn btn-primary" onclick="saveMedication()" data-i18n="save">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="translations.js"></script>
+    <script src="language.js"></script>
+    <script src="schedule.js"></script>
+</body>
+</html>

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXURA - Registration</title>
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+    <div class="register-container">
+        <!-- Theme Toggle Button -->
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <i class="fas fa-moon"></i>
+        </button>
+
+        <!-- Background Decoration -->
+        <div class="bg-decoration">
+            <div class="circle circle-1"></div>
+            <div class="circle circle-2"></div>
+            <div class="circle circle-3"></div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="register-main">
+            <!-- Top Bar -->
+            <div class="register-top-bar">
+                <div class="logo-container">
+                    <div class="logo-icon">
+                        <i class="fas fa-capsules"></i>
+                    </div>
+                    <div class="logo-text">
+                        <span class="logo-nexura">NEXURA</span>
+                        <span class="logo-dot">.</span>
+                    </div>
+                </div>
+                
+                <div class="language-section">
+                    <div class="language-label">
+                        <i class="fas fa-globe-americas"></i>
+                        <span data-i18n="selectLanguage">SELECT LANGUAGE</span>
+                    </div>
+                    <div class="language-select-wrapper">
+                        <select class="language-select" id="languageSelect">
+                            <!-- Options populated by JavaScript -->
+                        </select>
+                        <i class="fas fa-chevron-down language-arrow"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Registration Form -->
+            <div class="register-form-container">
+                <div class="register-header">
+                    <h1 data-i18n="registerTitle">Create Your Account</h1>
+                    <p data-i18n="registerSubtitle">Join NEXURA for smart medication management</p>
+                </div>
+
+                <form id="registrationForm">
+                    <!-- Product Code Activation - Radio Buttons -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            <i class="fas fa-key"></i>
+                            <span data-i18n="productActivation">Product Code Activation</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" data-i18n="selectProductType">Select Your Product Type</label>
+                            <div class="product-selector">
+                                <div class="product-option">
+                                    <input type="radio" name="productCode" id="productTablets" value="NEX123" checked>
+                                    <label for="productTablets">
+                                        <i class="fas fa-tablets"></i>
+                                        <span class="product-name">NEX123</span>
+                                        <span class="product-desc" data-i18n="tabletsProduct">Tablets</span>
+                                        <span class="product-check">
+                                            <i class="fas fa-check-circle"></i>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="product-option">
+                                    <input type="radio" name="productCode" id="productSyrups" value="NEX234">
+                                    <label for="productSyrups">
+                                        <i class="fas fa-flask"></i>
+                                        <span class="product-name">NEX234</span>
+                                        <span class="product-desc" data-i18n="syrupsProduct">Syrups</span>
+                                        <span class="product-check">
+                                            <i class="fas fa-check-circle"></i>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div id="productStatus" class="status-message"></div>
+                        </div>
+                    </div>
+
+                    <!-- User Details -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            <i class="fas fa-user-plus"></i>
+                            <span data-i18n="userDetails">User Details</span>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" data-i18n="fullName">Full Name</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" class="form-control" id="fullName" 
+                                           placeholder="Enter your full name" 
+                                           data-i18n-placeholder="fullName">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" data-i18n="email">Email Address</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-envelope"></i>
+                                    <input type="email" class="form-control" id="email" 
+                                           placeholder="Enter your email" 
+                                           data-i18n-placeholder="email">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" data-i18n="mobile">Mobile Number</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-phone"></i>
+                                    <input type="tel" class="form-control" id="mobile" 
+                                           placeholder="Enter 10-digit mobile number" 
+                                           data-i18n-placeholder="mobile">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" data-i18n="password">Password</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-lock"></i>
+                                    <input type="password" class="form-control" id="password" 
+                                           placeholder="Create a strong password" 
+                                           data-i18n-placeholder="password">
+                                    <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility()">
+                                        <i class="fas fa-eye" id="passwordToggleIcon"></i>
+                                    </button>
+                                </div>
+                                <!-- Password Strength Indicator -->
+                                <div class="password-strength" id="passwordStrength">
+                                    <div class="strength-bar">
+                                        <div class="strength-fill" id="strengthFill"></div>
+                                    </div>
+                                    <div class="strength-requirements" id="strengthRequirements">
+                                        <span class="req-item" id="reqLength">
+                                            <i class="fas fa-circle"></i> Min 8 characters
+                                        </span>
+                                        <span class="req-item" id="reqUppercase">
+                                            <i class="fas fa-circle"></i> Uppercase
+                                        </span>
+                                        <span class="req-item" id="reqLowercase">
+                                            <i class="fas fa-circle"></i> Lowercase
+                                        </span>
+                                        <span class="req-item" id="reqNumber">
+                                            <i class="fas fa-circle"></i> Number
+                                        </span>
+                                        <span class="req-item" id="reqSpecial">
+                                            <i class="fas fa-circle"></i> Special character
+                                        </span>
+                                    </div>
+                                    <span class="strength-text" id="strengthText">Weak</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" data-i18n="confirmPassword">Confirm Password</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" class="form-control" id="confirmPassword" 
+                                       placeholder="Confirm your password" 
+                                       data-i18n-placeholder="confirmPassword">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Role Selection -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            <i class="fas fa-user-tag"></i>
+                            <span data-i18n="roleSelection">Select Your Role</span>
+                        </div>
+
+                        <div class="role-selector">
+                            <div class="role-option">
+                                <input type="radio" name="role" id="rolePatient" value="patient" checked>
+                                <label for="rolePatient">
+                                    <i class="fas fa-user"></i>
+                                    <span class="role-name" data-i18n="patient">Patient</span>
+                                    <span class="role-desc" data-i18n="patientDesc">Manage your own medications</span>
+                                </label>
+                            </div>
+                            <div class="role-option">
+                                <input type="radio" name="role" id="roleCaregiver" value="caregiver">
+                                <label for="roleCaregiver">
+                                    <i class="fas fa-user-md"></i>
+                                    <span class="role-name" data-i18n="caregiver">Caregiver</span>
+                                    <span class="role-desc" data-i18n="caregiverDesc">Manage medications for others</span>
+                                </label>
+                            </div>
+                            <div class="role-option">
+                                <input type="radio" name="role" id="roleAdmin" value="admin">
+                                <label for="roleAdmin">
+                                    <i class="fas fa-user-cog"></i>
+                                    <span class="role-name" data-i18n="admin">Admin</span>
+                                    <span class="role-desc" data-i18n="adminDesc">Full system access</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Terms & Conditions -->
+                    <div class="form-group terms-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="termsCheck">
+                            <span class="checkmark"></span>
+                            <span data-i18n="termsText">I agree to the Terms & Conditions and Privacy Policy</span>
+                        </label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary btn-block btn-register" id="registerBtn">
+                        <i class="fas fa-rocket"></i>
+                        <span data-i18n="registerAndStart">Register & Start with Personal Details</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+
+                    <!-- Login Link -->
+                    <div class="login-link">
+                        <span data-i18n="alreadyHaveAccount">Already have an account?</span>
+                        <a href="#" id="signInLink" data-i18n="signIn">Sign In</a>
+                    </div>
+
+                    <!-- Forgot Password Link -->
+                    <div class="forgot-password-link">
+                        <a href="#" id="forgotPasswordLink" data-i18n="forgotPassword">Forgot Password?</a>
+                    </div>
+
+                    <div id="registrationStatus" class="status-message"></div>
+                </form>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <span data-i18n="footerText">© 2026 NEXURA. All rights reserved.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div class="modal-overlay" id="forgotPasswordModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 data-i18n="resetPassword">Reset Password</h3>
+                <button class="modal-close" onclick="closeForgotPasswordModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p data-i18n="resetPasswordSubtitle">Enter your email or mobile number to receive OTP</p>
+                <div class="form-group">
+                    <label data-i18n="emailOrMobile">Email or Mobile</label>
+                    <input type="text" class="form-control" id="resetIdentifier" 
+                           placeholder="Enter email or mobile" data-i18n-placeholder="enterEmailOrMobile">
+                </div>
+                <div id="resetOTPSection" style="display:none;">
+                    <div class="form-group">
+                        <label data-i18n="enterOTP">Enter OTP</label>
+                        <div class="otp-input-group">
+                            <input type="text" class="form-control otp-input" id="otp1" maxlength="1" oninput="moveToNext(this, 'otp2')">
+                            <input type="text" class="form-control otp-input" id="otp2" maxlength="1" oninput="moveToNext(this, 'otp3')">
+                            <input type="text" class="form-control otp-input" id="otp3" maxlength="1" oninput="moveToNext(this, 'otp4')">
+                            <input type="text" class="form-control otp-input" id="otp4" maxlength="1" oninput="moveToNext(this, 'otp5')">
+                            <input type="text" class="form-control otp-input" id="otp5" maxlength="1" oninput="moveToNext(this, 'otp6')">
+                            <input type="text" class="form-control otp-input" id="otp6" maxlength="1">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="newPassword">New Password</label>
+                        <input type="password" class="form-control" id="resetNewPassword" 
+                               placeholder="Enter new password" data-i18n-placeholder="newPassword">
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="confirmPassword">Confirm Password</label>
+                        <input type="password" class="form-control" id="resetConfirmPassword" 
+                               placeholder="Confirm new password" data-i18n-placeholder="confirmPassword">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeForgotPasswordModal()" data-i18n="cancel">Cancel</button>
+                <button class="btn btn-primary" id="sendOTPBtn" onclick="sendOTP()" data-i18n="sendOTP">Send OTP</button>
+                <button class="btn btn-success" id="resetPasswordBtn" style="display:none;" onclick="resetPassword()" data-i18n="resetPassword">Reset Password</button>
+            </div>
+            <div id="resetStatus" class="status-message"></div>
+        </div>
+    </div>
+
+    <!-- OTP Verification Modal -->
+    <div class="modal-overlay" id="otpVerificationModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 data-i18n="otpVerification">OTP Verification</h3>
+                <button class="modal-close" onclick="closeOTPModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p data-i18n="otpSentMessage">We've sent a 6-digit OTP to your registered email/mobile</p>
+                <div class="form-group">
+                    <div class="otp-input-group">
+                        <input type="text" class="form-control otp-input" id="otp1" maxlength="1" oninput="moveToNext(this, 'otp2')">
+                        <input type="text" class="form-control otp-input" id="otp2" maxlength="1" oninput="moveToNext(this, 'otp3')">
+                        <input type="text" class="form-control otp-input" id="otp3" maxlength="1" oninput="moveToNext(this, 'otp4')">
+                        <input type="text" class="form-control otp-input" id="otp4" maxlength="1" oninput="moveToNext(this, 'otp5')">
+                        <input type="text" class="form-control otp-input" id="otp5" maxlength="1" oninput="moveToNext(this, 'otp6')">
+                        <input type="text" class="form-control otp-input" id="otp6" maxlength="1">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeOTPModal()" data-i18n="cancel">Cancel</button>
+                <button class="btn btn-primary" onclick="verifyOTP()" data-i18n="verifyOTP">Verify OTP</button>
+                <button class="btn btn-outline" onclick="resendOTP()" data-i18n="resendOTP">Resend OTP</button>
+            </div>
+            <div id="otpStatus" class="status-message"></div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="translations.js"></script>
+    <script src="language.js"></script>
+    <script src="register.js"></script>
+</body>
+</html>

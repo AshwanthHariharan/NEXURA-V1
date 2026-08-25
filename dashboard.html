@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXURA - Smart Pill Dispenser</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <!-- SheetJS for Excel Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="chatbot.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <i class="fas fa-pills"></i>
+                <span>NEXURA</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-page="dashboard">
+                    <i class="fas fa-th-large"></i>
+                    <span data-i18n="dashboard">Dashboard</span>
+                </a>
+                <a href="summary.html" class="nav-item" data-page="profile">
+                    <i class="fas fa-user"></i>
+                    <span data-i18n="profile">Profile</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="btn btn-danger btn-block" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> 
+                    <span data-i18n="logout">Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="btn-icon" id="sidebarToggle" onclick="toggleSidebar()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 data-i18n="dashboard">Dashboard</h1>
+                </div>
+                <div class="topbar-right">
+                    <div class="status-badge offline" id="deviceStatus">
+                        <i class="fas fa-wifi-slash"></i>
+                        <span data-i18n="offline">Offline ⚠️</span>
+                    </div>
+                    <select class="language-select" id="languageSelect">
+                        <!-- Populated by JavaScript -->
+                    </select>
+                    
+                    <!-- ============================================ -->
+                    <!-- AI CHATBOT ICON - Top Right -->
+                    <!-- ============================================ -->
+                    <button class="chatbot-top-btn" id="chatbotToggle" onclick="toggleChatbot()" aria-label="Chat with AI Assistant">
+                        <i class="fas fa-robot"></i>
+                        <span class="chatbot-badge">AI</span>
+                    </button>
+                    <div class="user-profile" onclick="goToProfile()">
+                        <span id="userNameDisplay">User</span>
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                </div>
+            </header>
+
+            <!-- IP Connection Settings -->
+            <div class="ip-settings">
+                <div class="ip-input-group">
+                    <input 
+                        type="text" 
+                        id="esp32IPInput" 
+                        placeholder="Enter ESP32 IP (e.g., 192.168.1.100)"
+                        value="10.0.1.204"
+                    >
+                    <button onclick="connectToESP32()" class="btn btn-primary">
+                        <i class="fas fa-plug"></i> <span data-i18n="connect">Connect</span>
+                    </button>
+                    <button onclick="discoverESP32()" class="btn btn-secondary">
+                        <i class="fas fa-search"></i> <span data-i18n="autoDiscover">Auto-Discover</span>
+                    </button>
+                    <button onclick="refreshConnection()" class="btn btn-info">
+                        <i class="fas fa-sync"></i> <span data-i18n="refresh">Refresh</span>
+                    </button>
+                </div>
+                <div class="connection-status" id="connectionStatus">
+                    <span class="status-text">⚠️ <span data-i18n="notConnected">Not connected</span></span>
+                </div>
+            </div>
+
+            <!-- Stats Row -->
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon blue"><i class="fas fa-pills"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-label" data-i18n="pillsRemaining">Pills Remaining</span>
+                        <span class="stat-value" id="pillCount">0</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green"><i class="fas fa-check-circle"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-label" data-i18n="todaysDoses">Today's Doses</span>
+                        <span class="stat-value" id="dosesToday">0/0</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon purple"><i class="fas fa-percent"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-label" data-i18n="adherenceRate">Adherence Rate</span>
+                        <span class="stat-value" id="adherenceRate">0%</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon orange"><i class="fas fa-clock"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-label" data-i18n="nextDose">Next Dose</span>
+                        <span class="stat-value" id="nextDose">--:--</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Low Pill Warning -->
+            <div class="warning-banner" id="lowPillWarning" style="display:none;">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span><span data-i18n="lowPillWarning">⚠️ Low Pill Count! Only</span> <span id="lowPillCount">0</span> <span data-i18n="pillsRemaining">pills remaining. Please refill soon.</span></span>
+            </div>
+
+            <!-- Daily Summary -->
+            <div class="daily-summary" id="dailySummary">
+                <div class="summary-item">
+                    <i class="fas fa-calendar-check"></i>
+                    <span data-i18n="dailySummary">Today's Summary</span>
+                </div>
+                <div class="summary-stats">
+                    <span class="summary-stat">
+                        <span data-i18n="taken">Taken</span>: <strong id="summaryTaken">0</strong>
+                    </span>
+                    <span class="summary-stat">
+                        <span data-i18n="pending">Pending</span>: <strong id="summaryPending">0</strong>
+                    </span>
+                    <span class="summary-stat">
+                        <span data-i18n="missed">Missed</span>: <strong id="summaryMissed">0</strong>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Main Dashboard Grid -->
+            <section class="dashboard-grid">
+                <!-- Schedule Cards -->
+                <div class="card schedule-section">
+                    <div class="card-header">
+                        <h3><i class="fas fa-clock"></i> <span data-i18n="todaysSchedule">Today's Schedule</span></h3>
+                        <span class="card-date" id="todayDate"></span>
+                    </div>
+                    <div class="schedule-list" id="scheduleList">
+                        <!-- Schedule items will be dynamically generated -->
+                    </div>
+                </div>
+
+                <!-- Chart -->
+                <div class="card chart-section">
+                    <div class="card-header">
+                        <h3><i class="fas fa-chart-bar"></i> <span data-i18n="adherenceOverview">Adherence Overview</span></h3>
+                        <div class="chart-controls">
+                            <button class="btn btn-sm btn-outline active" data-period="week" onclick="changeChartPeriod('week')" data-i18n="week">Week</button>
+                            <button class="btn btn-sm btn-outline" data-period="month" onclick="changeChartPeriod('month')" data-i18n="month">Month</button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="adherenceChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="card actions-section">
+                    <div class="card-header">
+                        <h3><i class="fas fa-bolt"></i> <span data-i18n="quickActions">Quick Actions</span></h3>
+                    </div>
+                    <div class="actions-grid">
+                        <button class="action-btn primary" onclick="manualDispense()">
+                            <i class="fas fa-capsules"></i>
+                            <span data-i18n="dispenseNow">Dispense Now</span>
+                        </button>
+                        <button class="action-btn success" onclick="refillPills()">
+                            <i class="fas fa-plus-circle"></i>
+                            <span data-i18n="refillPills">Refill Pills</span>
+                        </button>
+                        <button class="action-btn info" onclick="exportExcel()">
+                            <i class="fas fa-file-excel"></i>
+                            <span data-i18n="exportExcel">Export Excel</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Activity Log -->
+            <section class="log-section">
+                <div class="section-header">
+                    <h3><i class="fas fa-clock-rotate-left"></i> <span data-i18n="recentActivity">Recent Activity</span></h3>
+                    <button onclick="clearLog()" class="btn btn-sm btn-outline">
+                        <i class="fas fa-trash"></i> <span data-i18n="clear">Clear</span>
+                    </button>
+                </div>
+                <div id="activityLog" class="activity-log">
+                    <!-- Dynamic log entries -->
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <span data-i18n="footerText">© 2026 NEXURA. All rights reserved.</span>
+                <span class="footer-version">v2.0.0</span>
+            </footer>
+        </main>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- AI CHATBOT SIDEBAR (Your existing HTML) -->
+    <!-- ============================================ -->
+    
+    <!-- Chatbot Sidebar -->
+    <div class="chatbot-sidebar" id="chatbotSidebar">
+        <div class="chatbot-sidebar-header">
+            <div class="chatbot-header-content">
+                <div class="chatbot-header-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div>
+                    <h3>NEXURA AI Assistant</h3>
+                    <span class="chatbot-status">🟢 Online</span>
+                </div>
+            </div>
+            <button class="chatbot-close" onclick="toggleChatbot()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="chatbot-sidebar-body">
+            <div class="chatbot-messages" id="chatbotMessages">
+                <!-- Messages will be added dynamically -->
+            </div>
+            <div class="chatbot-input-area">
+                <input type="text" id="chatbotInput" placeholder="Type a message..." onkeydown="handleChatbotKeypress(event)">
+                <button class="chatbot-send-btn" onclick="sendChatbotMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alert Overlay -->
+    <div class="alert-overlay" id="alertOverlay">
+        <div class="alert-box">
+            <div class="alert-icon"><i class="fas fa-bell"></i></div>
+            <h2 class="alert-title" id="alertTitle" data-i18n="timeToTakeMedicine">Time to Take Medicine!</h2>
+            <p class="alert-subtitle" id="alertSubtitle" data-i18n="takeYourDose">It's time for your dose. Please take your pills.</p>
+            <div class="alert-actions">
+                <button class="btn btn-success alert-btn" onclick="acknowledgeAlert()">
+                    <i class="fas fa-check"></i> <span data-i18n="iHaveTakenPill">I've Taken the Pill</span>
+                </button>
+                <button class="btn btn-outline alert-btn" onclick="snoozeAlert()">
+                    <i class="fas fa-clock"></i> <span data-i18n="snooze">Snooze</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- JAVASCRIPT -->
+    <!-- ============================================ -->
+    <script src="translations.js"></script>
+    <script src="language.js"></script>
+    <script src="chatbot.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>

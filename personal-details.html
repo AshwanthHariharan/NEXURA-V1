@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXURA - Personal Details</title>
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="personal-details.css">
+</head>
+<body>
+    <div class="personal-details-container">
+        <!-- Theme Toggle Button -->
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <i class="fas fa-moon"></i>
+        </button>
+
+        <!-- Background Decoration -->
+        <div class="bg-decoration">
+            <div class="circle circle-1"></div>
+            <div class="circle circle-2"></div>
+            <div class="circle circle-3"></div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="personal-details-main">
+            <!-- Top Bar -->
+            <div class="personal-details-top-bar">
+                <div class="logo-container">
+                    <div class="logo-icon">
+                        <i class="fas fa-capsules"></i>
+                    </div>
+                    <div class="logo-text">
+                        <span class="logo-nexura">NEXURA</span>
+                        <span class="logo-dot">.</span>
+                    </div>
+                </div>
+                
+                <div class="language-section">
+                    <div class="language-label">
+                        <i class="fas fa-globe-americas"></i>
+                        <span data-i18n="selectLanguage">SELECT LANGUAGE</span>
+                    </div>
+                    <div class="language-select-wrapper">
+                        <select class="language-select" id="languageSelect">
+                            <!-- Options populated by JavaScript -->
+                        </select>
+                        <i class="fas fa-chevron-down language-arrow"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-steps">
+                    <div class="step completed">
+                        <span class="step-number">1</span>
+                        <span class="step-label" data-i18n="stepRegistration">Registration</span>
+                    </div>
+                    <div class="step-line completed"></div>
+                    <div class="step active">
+                        <span class="step-number">2</span>
+                        <span class="step-label" data-i18n="stepPersonalDetails">Personal Details</span>
+                    </div>
+                    <div class="step-line"></div>
+                    <div class="step">
+                        <span class="step-number">3</span>
+                        <span class="step-label" data-i18n="stepComplete">Complete</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Personal Details Form -->
+            <div class="personal-details-form-container">
+                <div class="personal-details-header">
+                    <h1 data-i18n="personalDetailsTitle">Personal Details</h1>
+                    <p data-i18n="personalDetailsSubtitle">Tell us more about yourself to personalize your medication experience</p>
+                </div>
+
+                <form id="personalDetailsForm">
+                    <!-- Personal Information -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            <i class="fas fa-user-circle"></i>
+                            <span data-i18n="personalInfo">Personal Information</span>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" data-i18n="fullName">Full Name</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" class="form-control" id="fullName" 
+                                           placeholder="Enter your full name" 
+                                           data-i18n-placeholder="fullName">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" data-i18n="dob">Date of Birth</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <input type="date" class="form-control" id="dob">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" data-i18n="age">Age</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-clock"></i>
+                                    <input type="number" class="form-control" id="age" 
+                                           placeholder="Enter your age" 
+                                           data-i18n-placeholder="age" min="1" max="150">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" data-i18n="sex">Sex</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-venus-mars"></i>
+                                    <select class="form-control" id="sex">
+                                        <option value="" data-i18n="selectSex">Select Sex</option>
+                                        <option value="male" data-i18n="male">Male</option>
+                                        <option value="female" data-i18n="female">Female</option>
+                                        <option value="other" data-i18n="other">Other</option>
+                                        <option value="prefer-not" data-i18n="preferNot">Prefer not to say</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Medical Conditions -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            <i class="fas fa-heartbeat"></i>
+                            <span data-i18n="medicalConditions">Medical Conditions</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" data-i18n="selectConditions">Select your medical conditions</label>
+                            <div class="multi-select-container" id="conditionsContainer">
+                                <div class="multi-select-input">
+                                    <input type="text" class="form-control" id="conditionSearch" 
+                                           placeholder="Search or type condition..." 
+                                           data-i18n-placeholder="searchCondition">
+                                    <button type="button" class="btn-add-item" id="addConditionBtn">
+                                        <i class="fas fa-plus"></i> Add
+                                    </button>
+                                </div>
+                                <div class="multi-select-dropdown" id="conditionsDropdown"></div>
+                                <div class="selected-items" id="selectedConditions"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Allergies -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            <i class="fas fa-allergies"></i>
+                            <span data-i18n="allergies">Allergies</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" data-i18n="selectAllergies">Select your allergies</label>
+                            <div class="multi-select-container" id="allergiesContainer">
+                                <div class="multi-select-input">
+                                    <input type="text" class="form-control" id="allergySearch" 
+                                           placeholder="Search or type allergy..." 
+                                           data-i18n-placeholder="searchAllergy">
+                                    <button type="button" class="btn-add-item" id="addAllergyBtn">
+                                        <i class="fas fa-plus"></i> Add
+                                    </button>
+                                </div>
+                                <div class="multi-select-dropdown" id="allergiesDropdown"></div>
+                                <div class="selected-items" id="selectedAllergies"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Medication Schedule - UPDATED WITH DAYS -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            <i class="fas fa-pills"></i>
+                            <span data-i18n="medicationSchedule">Medication Schedule</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" data-i18n="addMedication">Add your medications</label>
+                            <div class="medication-schedule-container">
+                                <!-- Medication Input Row - UPDATED WITH DAYS -->
+                                <div class="medication-input-row">
+                                    <div class="medication-name-wrapper">
+                                        <input type="text" class="form-control medication-input" id="medicationInput" 
+                                               placeholder="Type medication name..." 
+                                               data-i18n-placeholder="medicationName">
+                                    </div>
+                                    <div class="medication-day-wrapper">
+                                        <select class="form-control medication-day" id="medicationDay">
+                                            <option value="all" data-i18n="allDays">All Days</option>
+                                            <option value="monday" data-i18n="monday">Monday</option>
+                                            <option value="tuesday" data-i18n="tuesday">Tuesday</option>
+                                            <option value="wednesday" data-i18n="wednesday">Wednesday</option>
+                                            <option value="thursday" data-i18n="thursday">Thursday</option>
+                                            <option value="friday" data-i18n="friday">Friday</option>
+                                            <option value="saturday" data-i18n="saturday">Saturday</option>
+                                            <option value="sunday" data-i18n="sunday">Sunday</option>
+                                        </select>
+                                    </div>
+                                    <div class="medication-time-wrapper">
+                                        <input type="time" class="form-control medication-time" id="medicationTime" value="08:00">
+                                        <i class="fas fa-clock time-icon"></i>
+                                    </div>
+                                    <div class="medication-dosage-wrapper">
+                                        <input type="text" class="form-control medication-dosage" id="medicationDosage" 
+                                               placeholder="Dosage (e.g., 500mg)" data-i18n-placeholder="dosage">
+                                    </div>
+                                    <button type="button" class="btn-add-medication" id="addMedicationBtn">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                                
+                                <!-- Selected Medications List -->
+                                <div class="selected-medications" id="selectedMedications">
+                                    <span class="empty-message" data-i18n="noMedications">No medications added yet</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Emergency Contacts -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            <i class="fas fa-phone-alt"></i>
+                            <span data-i18n="emergencyContacts">Emergency Contacts</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" data-i18n="emergencyName">Contact Name</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-user"></i>
+                                <input type="text" class="form-control" id="emergencyName" 
+                                       placeholder="Enter emergency contact name" 
+                                       data-i18n-placeholder="emergencyName">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" data-i18n="emergencyRelation">Relationship</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-users"></i>
+                                    <input type="text" class="form-control" id="emergencyRelation" 
+                                           placeholder="e.g., Spouse, Parent, Sibling" 
+                                           data-i18n-placeholder="emergencyRelation">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" data-i18n="emergencyPhone">Phone Number</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-phone"></i>
+                                    <input type="tel" class="form-control" id="emergencyPhone" 
+                                           placeholder="Enter 10-digit mobile number" 
+                                           data-i18n-placeholder="emergencyPhone">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Doctor Details -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            <i class="fas fa-user-md"></i>
+                            <span data-i18n="doctorDetails">Doctor Details</span>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" data-i18n="doctorName">Doctor's Name</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-user-md"></i>
+                                    <input type="text" class="form-control" id="doctorName" 
+                                           placeholder="Enter doctor's name" 
+                                           data-i18n-placeholder="doctorName">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" data-i18n="doctorSpecialty">Specialty</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-stethoscope"></i>
+                                    <input type="text" class="form-control" id="doctorSpecialty" 
+                                           placeholder="e.g., Cardiologist, Neurologist" 
+                                           data-i18n-placeholder="doctorSpecialty">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" data-i18n="doctorPhone">Doctor's Phone</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-phone"></i>
+                                    <input type="tel" class="form-control" id="doctorPhone" 
+                                           placeholder="Enter doctor's phone number" 
+                                           data-i18n-placeholder="doctorPhone">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" data-i18n="doctorEmail">Doctor's Email</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-envelope"></i>
+                                    <input type="email" class="form-control" id="doctorEmail" 
+                                           placeholder="Enter doctor's email" 
+                                           data-i18n-placeholder="doctorEmail">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary btn-block btn-submit" id="submitBtn">
+                        <i class="fas fa-save"></i>
+                        <span data-i18n="saveAndContinue">Save & Continue</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+
+                    <!-- Back Link -->
+                    <div class="back-link">
+                        <a href="register.html" id="backLink">
+                            <i class="fas fa-arrow-left"></i>
+                            <span data-i18n="backToRegistration">Back to Registration</span>
+                        </a>
+                    </div>
+
+                    <div id="personalDetailsStatus" class="status-message"></div>
+                </form>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <span data-i18n="footerText">© 2026 NEXURA. All rights reserved.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="translations.js"></script>
+    <script src="language.js"></script>
+    <script src="personal-details.js"></script>
+</body>
+</html>

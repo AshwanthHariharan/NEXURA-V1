@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXURA - Medications</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="medications.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <i class="fas fa-pills"></i>
+                <span data-i18n="appName">NEXURA</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item" data-page="dashboard">
+                    <i class="fas fa-th-large"></i>
+                    <span data-i18n="dashboard">Dashboard</span>
+                </a>
+                <a href="schedule.html" class="nav-item" data-page="schedule">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span data-i18n="schedule">Schedule</span>
+                </a>
+                <a href="#" class="nav-item active" data-page="medications">
+                    <i class="fas fa-pills"></i>
+                    <span data-i18n="medications">Medications</span>
+                </a>
+                <a href="#" class="nav-item" data-page="reports">
+                    <i class="fas fa-chart-line"></i>
+                    <span data-i18n="reports">Reports</span>
+                </a>
+                <a href="summary.html" class="nav-item" data-page="profile">
+                    <i class="fas fa-user"></i>
+                    <span data-i18n="profile">Profile</span>
+                </a>
+                <a href="#" class="nav-item" data-page="settings">
+                    <i class="fas fa-cog"></i>
+                    <span data-i18n="settings">Settings</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="btn btn-danger btn-block" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> <span data-i18n="logout">Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="btn-icon" id="sidebarToggle" onclick="toggleSidebar()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 data-i18n="medications">Medications</h1>
+                </div>
+                <div class="topbar-right">
+                    <div class="status-badge online" id="deviceStatus">
+                        <i class="fas fa-wifi"></i>
+                        <span data-i18n="connected">Connected</span>
+                    </div>
+                    <div class="language-section">
+                        <select class="language-select" id="languageSelect">
+                            <!-- Options populated by JavaScript -->
+                        </select>
+                    </div>
+                    <button class="btn-icon" id="themeToggle" onclick="toggleTheme()">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <div class="user-profile" onclick="goToProfile()">
+                        <span id="userNameDisplay">User</span>
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Medications Content -->
+            <div class="medications-container">
+                <!-- Header with Add Button -->
+                <div class="medications-header">
+                    <div class="header-left">
+                        <h2 data-i18n="medicationManagement">Medication Management</h2>
+                        <p data-i18n="medicationSubtitle">Manage all your medications in one place</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="openAddMedicationModal()">
+                        <i class="fas fa-plus"></i>
+                        <span data-i18n="addMedication">Add Medication</span>
+                    </button>
+                </div>
+
+                <!-- Stats Summary -->
+                <div class="medication-stats">
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalMedications">0</span>
+                        <span class="stat-label" data-i18n="totalMedications">Total Medications</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="todayDoses">0</span>
+                        <span class="stat-label" data-i18n="todaysDoses">Today's Doses</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="pendingDoses">0</span>
+                        <span class="stat-label" data-i18n="pendingDoses">Pending Doses</span>
+                    </div>
+                </div>
+
+                <!-- Filter/Search -->
+                <div class="medication-filters">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchMedication" placeholder="Search medications..." oninput="filterMedications()">
+                    </div>
+                    <div class="filter-options">
+                        <select id="filterFrequency" onchange="filterMedications()">
+                            <option value="all" data-i18n="allFrequencies">All Frequencies</option>
+                            <option value="once">Once Daily</option>
+                            <option value="twice">Twice Daily</option>
+                            <option value="thrice">Thrice Daily</option>
+                            <option value="four">Four Times Daily</option>
+                            <option value="as-needed">As Needed</option>
+                        </select>
+                        <select id="filterStatus" onchange="filterMedications()">
+                            <option value="all" data-i18n="allStatus">All Status</option>
+                            <option value="active">Active</option>
+                            <option value="paused">Paused</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Medications Grid -->
+                <div class="medications-grid" id="medicationsGrid">
+                    <!-- Cards will be dynamically generated -->
+                </div>
+
+                <!-- Empty State -->
+                <div class="empty-state" id="emptyState" style="display:none;">
+                    <i class="fas fa-pills"></i>
+                    <h3 data-i18n="noMedicationsYet">No Medications Yet</h3>
+                    <p data-i18n="noMedicationsMessage">Start by adding your first medication to keep track of your doses.</p>
+                    <button class="btn btn-primary" onclick="openAddMedicationModal()">
+                        <i class="fas fa-plus"></i>
+                        <span data-i18n="addFirstMedication">Add Your First Medication</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <span>© 2026 NEXURA. <span data-i18n="allRightsReserved">All rights reserved.</span></span>
+                <span class="footer-version">v2.0.0</span>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Add/Edit Medication Modal -->
+    <div class="modal-overlay" id="medicationModal">
+        <div class="modal-box modal-medication">
+            <div class="modal-header">
+                <h3 id="modalTitle" data-i18n="addMedication">Add Medication</h3>
+                <button class="modal-close" onclick="closeMedicationModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="medicationForm">
+                    <input type="hidden" id="editIndex" value="-1">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label data-i18n="medicationName">Medication Name</label>
+                            <input type="text" class="form-control" id="medName" 
+                                   placeholder="Enter medication name" required>
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="dosage">Dosage</label>
+                            <input type="text" class="form-control" id="medDosage" 
+                                   placeholder="e.g., 500mg, 10ml">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label data-i18n="frequency">Frequency</label>
+                            <select class="form-control" id="medFrequency">
+                                <option value="once">Once Daily</option>
+                                <option value="twice" selected>Twice Daily</option>
+                                <option value="thrice">Thrice Daily</option>
+                                <option value="four">Four Times Daily</option>
+                                <option value="as-needed">As Needed</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="time">Time</label>
+                            <input type="time" class="form-control" id="medTime" value="08:00">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label data-i18n="startDate">Start Date</label>
+                            <input type="date" class="form-control" id="medStartDate">
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="endDate">End Date (Optional)</label>
+                            <input type="date" class="form-control" id="medEndDate">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label data-i18n="notes">Notes</label>
+                        <textarea class="form-control" id="medNotes" 
+                                  placeholder="Additional notes about this medication" rows="2"></textarea>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="medActive" checked>
+                            <span class="checkmark"></span>
+                            <span data-i18n="activeMedication">Active Medication</span>
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeMedicationModal()" data-i18n="cancel">Cancel</button>
+                <button class="btn btn-danger" id="deleteMedBtn" style="display:none;" onclick="deleteMedication()">
+                    <i class="fas fa-trash"></i> <span data-i18n="delete">Delete</span>
+                </button>
+                <button class="btn btn-primary" onclick="saveMedication()">
+                    <i class="fas fa-save"></i> <span data-i18n="save">Save</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="translations.js"></script>
+    <script src="language.js"></script>
+    <script src="medications.js"></script>
+</body>
+</html>

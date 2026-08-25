@@ -1,0 +1,414 @@
+/* css/medications.css */
+
+/* Medications Container */
+.medications-container {
+    padding: 0 0 20px 0;
+}
+
+.medications-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.medications-header .header-left h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+}
+
+.medications-header .header-left p {
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+/* Medication Stats */
+.medication-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.medication-stats .stat-item {
+    background: var(--card-bg);
+    padding: 16px 20px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    text-align: center;
+    transition: var(--transition);
+}
+
+.medication-stats .stat-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.medication-stats .stat-number {
+    display: block;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.2;
+}
+
+.medication-stats .stat-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* Filters */
+.medication-filters {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.medication-filters .search-box {
+    flex: 1;
+    min-width: 200px;
+    position: relative;
+}
+
+.medication-filters .search-box i {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+}
+
+.medication-filters .search-box input {
+    width: 100%;
+    padding: 10px 14px 10px 42px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--card-bg);
+    color: var(--text);
+    font-size: 14px;
+    transition: var(--transition);
+}
+
+.medication-filters .search-box input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(42, 125, 225, 0.1);
+}
+
+.medication-filters .filter-options {
+    display: flex;
+    gap: 10px;
+}
+
+.medication-filters .filter-options select {
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--card-bg);
+    color: var(--text);
+    font-size: 14px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.medication-filters .filter-options select:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+/* Medications Grid */
+.medications-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.medication-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 20px;
+    transition: var(--transition);
+    border-left: 4px solid var(--primary);
+    position: relative;
+}
+
+.medication-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+}
+
+.medication-card .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.medication-card .med-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.medication-card .med-dosage {
+    font-size: 14px;
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.medication-card .status-badge-med {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-badge-med.active {
+    background: rgba(40, 167, 69, 0.12);
+    color: var(--success);
+}
+
+.status-badge-med.paused {
+    background: rgba(255, 193, 7, 0.12);
+    color: #856404;
+}
+
+.status-badge-med.completed {
+    background: rgba(108, 117, 125, 0.12);
+    color: var(--text-muted);
+}
+
+.medication-card .med-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin: 12px 0;
+}
+
+.medication-card .med-detail-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.medication-card .med-detail-item i {
+    width: 18px;
+    color: var(--primary);
+}
+
+.medication-card .med-notes {
+    font-size: 13px;
+    color: var(--text-muted);
+    padding: 8px 12px;
+    background: rgba(0,0,0,0.02);
+    border-radius: 8px;
+    margin: 8px 0;
+}
+
+body.dark-mode .medication-card .med-notes {
+    background: rgba(255,255,255,0.02);
+}
+
+.medication-card .card-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+}
+
+.medication-card .card-actions .btn-sm {
+    padding: 6px 14px;
+    font-size: 12px;
+}
+
+.medication-card .card-actions .btn-success {
+    background: var(--success);
+    color: white;
+}
+
+.medication-card .card-actions .btn-success:hover {
+    background: #218838;
+}
+
+.medication-card .card-actions .btn-warning {
+    background: var(--warning);
+    color: white;
+}
+
+.medication-card .card-actions .btn-warning:hover {
+    background: #e0a800;
+}
+
+.medication-card .card-actions .btn-danger {
+    background: var(--danger);
+    color: white;
+}
+
+.medication-card .card-actions .btn-danger:hover {
+    background: #c82333;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.empty-state i {
+    font-size: 64px;
+    color: var(--text-light);
+    opacity: 0.3;
+    margin-bottom: 16px;
+}
+
+.empty-state h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+}
+
+.empty-state p {
+    font-size: 15px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+}
+
+/* Modal */
+.modal-medication {
+    max-width: 560px;
+}
+
+.modal-medication .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.modal-medication .form-group {
+    margin-bottom: 16px;
+}
+
+.modal-medication .form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+}
+
+.modal-medication .form-group .form-control {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--card-bg);
+    color: var(--text);
+    font-size: 14px;
+    transition: var(--transition);
+    font-family: 'Inter', sans-serif;
+}
+
+.modal-medication .form-group .form-control:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(42, 125, 225, 0.1);
+}
+
+.modal-medication .form-group textarea.form-control {
+    resize: vertical;
+    min-height: 60px;
+}
+
+.modal-medication .checkbox-group {
+    margin-top: 8px;
+}
+
+.modal-medication .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.modal-medication .checkbox-label input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--primary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .medication-stats {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .medication-stats .stat-item:last-child {
+        grid-column: 1 / -1;
+    }
+    
+    .medications-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .medication-filters {
+        flex-direction: column;
+    }
+    
+    .medication-filters .filter-options {
+        flex-wrap: wrap;
+    }
+    
+    .medication-filters .filter-options select {
+        flex: 1;
+        min-width: 140px;
+    }
+    
+    .medications-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .medications-header button {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .modal-medication .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .medication-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .medication-stats .stat-item:last-child {
+        grid-column: auto;
+    }
+    
+    .medication-card .med-details {
+        grid-template-columns: 1fr;
+    }
+    
+    .medication-card .card-actions {
+        flex-wrap: wrap;
+    }
+}

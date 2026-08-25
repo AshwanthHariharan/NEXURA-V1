@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXURA - Summary</title>
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="summary.css">
+</head>
+<body>
+    <div class="summary-container">
+        <!-- Theme Toggle Button -->
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <i class="fas fa-moon"></i>
+        </button>
+
+        <!-- Background Decoration -->
+        <div class="bg-decoration">
+            <div class="circle circle-1"></div>
+            <div class="circle circle-2"></div>
+            <div class="circle circle-3"></div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="summary-main">
+            <!-- Top Bar -->
+            <div class="summary-top-bar">
+                <div class="logo-container">
+                    <div class="logo-icon">
+                        <i class="fas fa-capsules"></i>
+                    </div>
+                    <div class="logo-text">
+                        <span class="logo-nexura">NEXURA</span>
+                        <span class="logo-dot">.</span>
+                    </div>
+                </div>
+                
+                <div class="language-section">
+                    <div class="language-label">
+                        <i class="fas fa-globe-americas"></i>
+                        <span data-i18n="selectLanguage">SELECT LANGUAGE</span>
+                    </div>
+                    <div class="language-select-wrapper">
+                        <select class="language-select" id="languageSelect">
+                            <!-- Options populated by JavaScript -->
+                        </select>
+                        <i class="fas fa-chevron-down language-arrow"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-steps">
+                    <div class="step completed">
+                        <span class="step-number">1</span>
+                        <span class="step-label" data-i18n="stepRegistration">Registration</span>
+                    </div>
+                    <div class="step-line completed"></div>
+                    <div class="step completed">
+                        <span class="step-number">2</span>
+                        <span class="step-label" data-i18n="stepPersonalDetails">Personal Details</span>
+                    </div>
+                    <div class="step-line completed"></div>
+                    <div class="step active">
+                        <span class="step-number">3</span>
+                        <span class="step-label" data-i18n="stepComplete">Complete</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary Content -->
+            <div class="summary-content">
+                <div class="summary-header">
+                    <div class="success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h1 data-i18n="summaryTitle">Registration Complete!</h1>
+                    <p data-i18n="summarySubtitle">Please review your details before proceeding to the dashboard</p>
+                </div>
+
+                <div class="summary-cards">
+                    <!-- Registration Details -->
+                    <div class="summary-card">
+                        <div class="card-header">
+                            <i class="fas fa-user-plus"></i>
+                            <span data-i18n="registrationDetails">Registration Details</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="detail-item">
+                                <span class="detail-label" data-i18n="fullName">Full Name</span>
+                                <span class="detail-value" id="summaryFullName">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label" data-i18n="email">Email</span>
+                                <span class="detail-value" id="summaryEmail">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label" data-i18n="mobile">Mobile</span>
+                                <span class="detail-value" id="summaryMobile">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label" data-i18n="role">Role</span>
+                                <span class="detail-value" id="summaryRole">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label" data-i18n="productCode">Product Code</span>
+                                <span class="detail-value" id="summaryProductCode">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Personal Details -->
+                    <div class="summary-card">
+                        <div class="card-header">
+                            <i class="fas fa-user-circle"></i>
+                            <span data-i18n="personalDetails">Personal Details</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="detail-item">
+                                <span class="detail-label" data-i18n="dob">Date of Birth</span>
+                                <span class="detail-value" id="summaryDob">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label" data-i18n="age">Age</span>
+                                <span class="detail-value" id="summaryAge">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label" data-i18n="sex">Sex</span>
+                                <span class="detail-value" id="summarySex">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label" data-i18n="medicalConditions">Medical Conditions</span>
+                                <span class="detail-value" id="summaryConditions">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label" data-i18n="allergies">Allergies</span>
+                                <span class="detail-value" id="summaryAllergies">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Emergency Contact -->
+                    <div class="summary-card">
+                        <div class="card-header">
+                            <i class="fas fa-phone-alt"></i>
+                            <span data-i18n="emergencyContacts">Emergency Contact</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="detail-item">
+                                <span class="detail-label" data-i18n="emergencyName">Contact Name</span>
+                                <span class="detail-value" id="summaryEmergencyName">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label" data-i18n="emergencyRelation">Relationship</span>
+                                <span class="detail-value" id="summaryEmergencyRelation">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label" data-i18n="emergencyPhone">Phone</span>
+                                <span class="detail-value" id="summaryEmergencyPhone">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Doctor Details -->
+                    <div class="summary-card">
+                        <div class="card-header">
+                            <i class="fas fa-user-md"></i>
+                            <span data-i18n="doctorDetails">Doctor Details</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="detail-item">
+                                <span class="detail-label" data-i18n="doctorName">Doctor's Name</span>
+                                <span class="detail-value" id="summaryDoctorName">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label" data-i18n="doctorSpecialty">Specialty</span>
+                                <span class="detail-value" id="summaryDoctorSpecialty">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label" data-i18n="doctorPhone">Phone</span>
+                                <span class="detail-value" id="summaryDoctorPhone">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label" data-i18n="doctorEmail">Email</span>
+                                <span class="detail-value" id="summaryDoctorEmail">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Medications -->
+                    <div class="summary-card full-width">
+                        <div class="card-header">
+                            <i class="fas fa-pills"></i>
+                            <span data-i18n="medicationsList">Medications</span>
+                        </div>
+                        <div class="card-body">
+                            <div id="summaryMedications">
+                                <span class="no-data" data-i18n="noMedications">No medications added</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="summary-actions">
+                    <button class="btn btn-secondary" id="editBtn">
+                        <i class="fas fa-edit"></i>
+                        <span data-i18n="editDetails">Edit Details</span>
+                    </button>
+                    <button class="btn btn-primary" id="dashboardBtn">
+                        <i class="fas fa-rocket"></i>
+                        <span data-i18n="goToDashboard">Go to Dashboard</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <span data-i18n="footerText">© 2026 NEXURA. All rights reserved.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="translations.js"></script>
+    <script src="language.js"></script>
+    <script src="summary.js"></script>
+</body>
+</html>
